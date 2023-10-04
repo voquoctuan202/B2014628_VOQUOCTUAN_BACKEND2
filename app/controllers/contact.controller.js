@@ -1,6 +1,6 @@
 const ApiError = require("../api-error")
 const ContactService = require("../services/contect.service")
-
+const MongoDB = require("../utils/mongodb.util")
 
 exports.create = async (req, res, next)=>{
     if(!req.body?.name){
@@ -8,7 +8,6 @@ exports.create = async (req, res, next)=>{
     }
 
     try{
-        //console.log("Run create")
         const contactService = new ContactService(MongoDB.client)
         const document = await contactService.create(req.body)
         
@@ -22,6 +21,7 @@ exports.create = async (req, res, next)=>{
 exports.findAll = async (req,res,next)=>{
     let documents = [];
     try{
+        
         const contactService = new ContactService(MongoDB.client)
         const { name } = req.query;
         if(name){
